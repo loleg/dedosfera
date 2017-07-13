@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>#dedosfera</title>
+    <meta name="description" content="Dedosféra – #ADV17 #aframe">
+    <!-- <script src="../../dist/aframe-master.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/0.6.0/aframe-master.min.js"></script>
+    <script src="components/ground.js"></script>
+    <script src="components/datasphere.js"></script>
+    <script src="shaders/skyGradient.js"></script>
+    <script src="shaders/ShaderTerrain.js"></script>
+  </head>
+  <body>
+    <a-scene fog="color: #bc483e; near: 0; far: 65;">
+
+      <!-- Environment -->
+      <a-entity id="sky"
+                geometry="primitive: sphere; radius: 65;"
+                material="shader: skyGradient; colorTop: #353449; colorBottom: #BC483E; side: back"></a-entity>
+         <a-entity ground></a-entity>
+         <a-entity datasphere></a-entity>
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.2; distance: 0" position="8 10 18"></a-entity>
+         <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 18"></a-entity>
+         <a-entity light="type: point; color: #f4f4f4; intensity: 2.0" position="0 0 10"></a-entity>
+         <a-entity light="type: ambient; color: #f4f4f4; intensity: 1.0;" position="-8 10 18"></a-entity>
+      </a-entity>
+
+    </a-scene>
+
+    <div id="goButtons" class="button_controls">
+      <a id="goInspector" class="btn" rel="nofollow" title="Or open with `<ctrl> + <alt> + i`.">Visual Inspector</a>
+      <a class="btn" href="https://github.com/loleg/dedosfera" target="_blank" title="View the code on GitHub">Info &amp; Sources</a>
+    </div>
+    <script>
+    document.querySelector('#goInspector').addEventListener('click', function(){
+      window.postMessage('INJECT_AFRAME_INSPECTOR','*');
+      document.querySelector('#goButtons').style.display='none';
+    });
+    </script>
+    <style>
+    .button_controls {
+      position: absolute;
+      text-transform: uppercase;
+      top: 5px;
+      right: 5px;
+      z-index: 2;
+      font-size: 12px;
+      line-height: 1.5;
+      font-family: Helvetica,Arial,sans-serif;
+    }
+    .button_controls a {
+      background: rgba(0,0,0,0.35);
+      color: #fff;
+      display: inline-block;
+      padding: 5px 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button_controls a:hover {
+      background-color: #ef2d5e;
+    }
+    </style>
+
+  </body>
+</html>
