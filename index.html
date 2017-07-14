@@ -10,6 +10,8 @@
     <script src="components/datasphere.js"></script>
     <script src="shaders/skyGradient.js"></script>
     <script src="shaders/ShaderTerrain.js"></script>
+    <script src="lib/STLExporter.js"></script>
+    <script src="lib/FileSaver.min.js"></script>
   </head>
   <body>
     <a-scene fog="color: #bc483e; near: 0; far: 65;">
@@ -19,7 +21,7 @@
                 geometry="primitive: sphere; radius: 65;"
                 material="shader: skyGradient; colorTop: #353449; colorBottom: #BC483E; side: back"></a-entity>
          <a-entity ground></a-entity>
-         <a-entity datasphere></a-entity>
+         <a-entity datasphere id="ds1"></a-entity>
          <a-entity light="type: point; color: #f4f4f4; intensity: 0.2; distance: 0" position="8 10 18"></a-entity>
          <a-entity light="type: point; color: #f4f4f4; intensity: 0.6; distance: 0" position="-8 10 18"></a-entity>
          <a-entity light="type: point; color: #f4f4f4; intensity: 2.0" position="0 0 10"></a-entity>
@@ -29,13 +31,23 @@
     </a-scene>
 
     <div id="goButtons" class="button_controls">
-      <a id="goInspector" class="btn" rel="nofollow" title="Or open with `<ctrl> + <alt> + i`.">Visual Inspector</a>
-      <a class="btn" href="https://github.com/loleg/dedosfera" target="_blank" title="View the code on GitHub">Info &amp; Sources</a>
+      <a class="btn" href="https://github.com/loleg/dedosfera" target="_blank" title="View the code on GitHub">Sources</a>
+      <a id="goInspector" class="btn" rel="nofollow" title="Or open with `<ctrl> + <alt> + i`.">Inspector</a>
+      <a id="goDownload" class="btn" rel="nofollow">🡻 STL</a>
     </div>
     <script>
-    document.querySelector('#goInspector').addEventListener('click', function(){
+    document.querySelector('#goInspector').addEventListener('click', function() {
       window.postMessage('INJECT_AFRAME_INSPECTOR','*');
       document.querySelector('#goButtons').style.display='none';
+    });
+    document.querySelector('#goDownload').addEventListener('click', function() {
+      var name = 'datasphere_1';
+      var exporter = new THREE.STLExporter();
+      var sceneEl = document.querySelector('a-scene');
+      var tgtObject = sceneEl.querySelector('#ds1').object3D;
+      var stlString = exporter.parse( tgtObject );
+      var blob = new Blob([stlString], {type: 'text/plain'});
+      saveAs(blob, name + '.stl');
     });
     </script>
     <style>
